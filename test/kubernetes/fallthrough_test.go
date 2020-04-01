@@ -65,7 +65,6 @@ func TestKubernetesFallthrough(t *testing.T) {
       file /etc/coredns/Zonefile cluster.local
       kubernetes cluster.local {
           namespaces test-1
-          upstream ` + udp + `
           fallthrough
       }
       forward . ` + udp + `
@@ -121,12 +120,6 @@ var dnsTestCasesFallthroughFiltered = []test.Case{
 
 func TestKubernetesFallthroughFiltered(t *testing.T) {
 
-	rmFunc, upstream, udp := UpstreamServer(t, "example.net", ExampleNet)
-	defer upstream.Stop()
-	defer rmFunc()
-
-	time.Sleep(1 * time.Second)
-
 	corefile := `    .:53 {
       health
       ready
@@ -135,7 +128,6 @@ func TestKubernetesFallthroughFiltered(t *testing.T) {
       file /etc/coredns/Zonefile cluster.local
       kubernetes cluster.local {
           namespaces test-1
-          upstream ` + udp + `
           fallthrough svc.cluster.local
       }
     }

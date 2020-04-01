@@ -147,8 +147,8 @@ func TestKubernetesA(t *testing.T) {
         log
         kubernetes cluster.local 10.in-addr.arpa {
             namespaces test-1
-            upstream ` + udp + `
-        }
+		}
+		forward ` + udp + `
     }
 `
 
